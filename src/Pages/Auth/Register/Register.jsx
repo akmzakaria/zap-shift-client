@@ -18,7 +18,7 @@ const Register = () => {
   } = useForm()
 
   const handleReg = (data) => {
-    console.log(data.photo[0])
+    // console.log(data.photo[0])
 
     const profileImg = data.photo[0]
 
@@ -74,7 +74,7 @@ const Register = () => {
   const handleGoogleSignin = () => {
     signinGoogle()
       .then((result) => {
-        console.log(result.user)
+        // console.log(result.user)
 
         // create user in the database
         const userInfo = {

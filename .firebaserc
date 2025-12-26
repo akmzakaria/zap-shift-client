@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "zap-shift-akm",
+    "prod": "zap-shift-akm"
+  },
+  "targets": {},
+  "etags": {}
+}

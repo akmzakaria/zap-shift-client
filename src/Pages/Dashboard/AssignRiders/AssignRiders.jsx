@@ -9,15 +9,15 @@ const AssignRiders = () => {
   const riderModalRef = useRef()
 
   const { data: parcels = [], refetch: parcelsRefetch } = useQuery({
-    queryKey: ['parcels', 'pending-pickup'],
+    queryKey: ['parcels', 'parcel_paid'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/parcels?deliveryStatus=pending-pickup')
+      const res = await axiosSecure.get('/parcels?deliveryStatus=parcel_paid')
       return res.data
     },
   })
 
   // todo: invalidate query after assigning a rider
-  const { data: riders = [] } = useQuery({
+  const { data: riders = [], refetch: riderRefetch } = useQuery({
     queryKey: ['riders', selectedParcel?.senderDistrict, 'available'],
     enabled: !!selectedParcel,
     queryFn: async () => {
@@ -39,10 +39,12 @@ const AssignRiders = () => {
       riderEmail: rider.riderEmail,
       riderName: rider.riderName,
       parcelId: selectedParcel._id,
+      trackingId: selectedParcel.trackingId,
     }
     axiosSecure.patch(`parcels/${selectedParcel._id}`, riderAssignInfo).then((res) => {
       riderModalRef.current.close()
       parcelsRefetch()
+      riderRefetch()
       console.log(res.data)
       if (res.data.modifiedCount) {
         Swal.fire({

@@ -1,12 +1,10 @@
-import axios, { AxiosError } from 'axios'
 import React, { useEffect } from 'react'
 import useAuth from './useAuth'
-import { registerVersion } from 'firebase/app'
 import { useNavigate } from 'react-router'
-import { SiNativescript } from 'react-icons/si'
+import axios from 'axios'
 
 const axiosSecure = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://zap-shift-server-neon.vercel.app',
 })
 
 const useAxiosSecure = () => {
@@ -16,7 +14,7 @@ const useAxiosSecure = () => {
   useEffect(() => {
     // intercept request
     const reqInterceptor = axiosSecure.interceptors.request.use((config) => {
-      config.headers.Authorization = `Beared ${user?.accessToken}`
+      config.headers.Authorization = `Bearer ${user?.accessToken}`
       return config
     })
 
